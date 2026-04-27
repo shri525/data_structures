@@ -8,10 +8,10 @@ void insertRear(int val) {
         printf("Overflow: Deque is full\n");
         return;
     }
-    if (front == -1) { // Empty queue
+    if (front == -1) { 
         front = 0;
         rear = 0;
-    } else if (rear == SIZE - 1) { // Wrap around
+    } else if (rear == SIZE - 1) { 
         rear = 0;
     } else {
         rear++;
@@ -25,10 +25,10 @@ void deleteFront() {
         return;
     }
     printf("Deleted %d from beginning\n", deque[front]);
-    if (front == rear) { // Only one element
+    if (front == rear) { 
         front = -1;
         rear = -1;
-    } else if (front == SIZE - 1) { // Wrap around
+    } else if (front == SIZE - 1) { 
         front = 0;
     } else {
         front++;
