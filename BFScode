@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int graph[10][10], visited[10] = {0};
+    int n, i, j, start;
+    int choice;
+    char x;
+
+    do {
+        cout << "\n--- BFS PROGRAM ---\n";
+        cout << "1. Create Graph\n";
+        cout << "2. BFS Traversal\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+
+            case 1: // Create Graph
+            {
+                cout << "Enter number of vertices: ";
+                cin >> n;
+
+                cout << "Enter adjacency matrix:\n";
+                for(i = 0; i < n; i++) {
+                    for(j = 0; j < n; j++) {
+                        cin >> graph[i][j];
+                    }
+                }
+                cout << "Graph Created\n";
+                break;
+            }
+
+            case 2: // BFS
+            {
+                int queue[10], front = 0, rear = -1;
+
+                cout << "Enter starting vertex (0 to " << n-1 << "): ";
+                cin >> start;
+
+                // reset visited
+                for(i = 0; i < n; i++)
+                    visited[i] = 0;
+
+                // start BFS
+                queue[++rear] = start;
+                visited[start] = 1;
+
+                cout << "BFS Traversal: ";
+
+                while(front <= rear) {
+                    int node = queue[front++];
+                    cout << node << " ";
+
+                    for(i = 0; i < n; i++) {
+                        if(graph[node][i] == 1 && visited[i] == 0) {
+                            queue[++rear] = i;
+                            visited[i] = 1;
+                        }
+                    }
+                }
+                cout << endl;
+                break;
+            }
+
+            default:
+                cout << "Invalid choice\n";
+        }
+
+        cout << "Do you want to continue (y/n): ";
+        cin >> x;
+
+    } while(x == 'y' || x == 'Y');
+
+    return 0;
+}
