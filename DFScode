@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int graph[10][10], visited[10] = {0};
+    int n, i, j, start;
+    int choice;
+    char x;
+
+    do {
+        cout << "1. Create Graph\n";
+        cout << "2. DFS Traversal\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+
+            case 1: 
+            {
+                cout << "Enter number of vertices: ";
+                cin >> n;
+
+                cout << "Enter adjacency matrix:\n";
+                for(i = 0; i < n; i++) {
+                    for(j = 0; j < n; j++) {
+                        cin >> graph[i][j];
+                    }
+                }
+                cout << "Graph Created\n";
+                break;
+            }
+
+            case 2: 
+            {
+                int stack[10], top = -1;
+
+                cout << "Enter starting vertex (0 to " << n-1 << "): ";
+                cin >> start;
+
+
+                for(i = 0; i < n; i++)
+                    visited[i] = 0;
+
+                
+                stack[++top] = start;
+
+                cout << "DFS Traversal: ";
+
+                while(top != -1) {
+                    int node = stack[top--];
+
+                    if(visited[node] == 0) {
+                        cout << node << " ";
+                        visited[node] = 1;
+
+                        
+                        for(i = n - 1; i >= 0; i--) {
+                            if(graph[node][i] == 1 && visited[i] == 0) {
+                                stack[++top] = i;
+                            }
+                        }
+                    }
+                }
+                cout << endl;
+                break;
+            }
+        }
+
+        cout << "Do you want to continue (y/n): ";
+        cin >> x;
+
+    } while(x == 'y' || x == 'Y');
+
+    return 0;
+}
