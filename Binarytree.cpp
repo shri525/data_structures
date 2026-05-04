@@ -1,5 +1,7 @@
 #include <iostream>
+#include <queue>
 using namespace std;
+
 
 struct node {
     int data;
@@ -7,8 +9,9 @@ struct node {
     node* right;
 };
 
+
 void inorder(node* root) {
-    if (root != NULL) {
+    if(root != NULL) {
         inorder(root->left);
         cout << root->data << " ";
         inorder(root->right);
@@ -16,7 +19,7 @@ void inorder(node* root) {
 }
 
 void preorder(node* root) {
-    if (root != NULL) {
+    if(root != NULL) {
         cout << root->data << " ";
         preorder(root->left);
         preorder(root->right);
@@ -24,7 +27,7 @@ void preorder(node* root) {
 }
 
 void postorder(node* root) {
-    if (root != NULL) {
+    if(root != NULL) {
         postorder(root->left);
         postorder(root->right);
         cout << root->data << " ";
@@ -37,11 +40,13 @@ int main() {
     char x;
 
     do {
-        cout << "1. Create\n";
-        cout << "2. Inorder\n";
-        cout << "3. Preorder\n";
-        cout << "4. Postorder\n";
-        cout << "5. Display (Inorder)\n";
+        cout << "\n--- BINARY TREE ---\n";
+        cout << "1. Create Tree\n";
+        cout << "2. Insert Node\n";
+        cout << "3. Inorder Traversal\n";
+        cout << "4. Preorder Traversal\n";
+        cout << "5. Postorder Traversal\n";
+        cout << "6. Display (Inorder)\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -63,51 +68,98 @@ int main() {
                     if(root == NULL) {
                         root = newNode;
                     } else {
-                        node* temp = root;
-                        node* parent;
+                        queue<node*> q;
+                        q.push(root);
 
-                        while(temp != NULL) {
-                            parent = temp;
-                            if(value < temp->data)
-                                temp = temp->left;
-                            else
-                                temp = temp->right;
+                        while(!q.empty()) {
+                            node* temp = q.front();
+                            q.pop();
+
+                            if(temp->left == NULL) {
+                                temp->left = newNode;
+                                break;
+                            } else {
+                                q.push(temp->left);
+                            }
+
+                            if(temp->right == NULL) {
+                                temp->right = newNode;
+                                break;
+                            } else {
+                                q.push(temp->right);
+                            }
                         }
-
-                        if(value < parent->data)
-                            parent->left = newNode;
-                        else
-                            parent->right = newNode;
                     }
                 }
-                cout << "BST Created\n";
+                cout << "Tree Created\n";
                 break;
             }
 
-            case 2:
-                cout << "Inorder Traversal: ";
+            case 2: 
+            {
+                cout << "Enter value: ";
+                cin >> value;
+
+                node* newNode = new node;
+                newNode->data = value;
+                newNode->left = newNode->right = NULL;
+
+                if(root == NULL) {
+                    root = newNode;
+                } else {
+                    queue<node*> q;
+                    q.push(root);
+
+                    while(!q.empty()) {
+                        node* temp = q.front();
+                        q.pop();
+
+                        if(temp->left == NULL) {
+                            temp->left = newNode;
+                            break;
+                        } else {
+                            q.push(temp->left);
+                        }
+
+                        if(temp->right == NULL) {
+                            temp->right = newNode;
+                            break;
+                        } else {
+                            q.push(temp->right);
+                        }
+                    }
+                }
+
+                cout << "Node Inserted\n";
+                break;
+            }
+
+            case 3:
+                cout << "Inorder: ";
                 inorder(root);
                 cout << endl;
                 break;
 
-            case 3: // Preorder
-                cout << "Preorder Traversal: ";
+            case 4:
+                cout << "Preorder: ";
                 preorder(root);
                 cout << endl;
                 break;
 
-            case 4: // Postorder
-                cout << "Postorder Traversal: ";
+            case 5:
+                cout << "Postorder: ";
                 postorder(root);
                 cout << endl;
                 break;
 
-            case 5: // Display (same as inorder)
-                cout << "Display (Sorted Order): ";
+            case 6:
+                cout << "Display (Inorder): ";
                 inorder(root);
                 cout << endl;
                 break;
-        }        
+
+           
+        }
 
         cout << "Do you want to continue (y/n): ";
         cin >> x;
